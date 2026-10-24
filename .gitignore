@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend_git_backup/
+backend/models/*.joblib
+backend/models/*.pkl
+data/*.csv
+backend/test_payload.json
+*.log

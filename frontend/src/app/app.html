@@ -1,0 +1,85 @@
+
+<main class="shell">
+
+  <h1>Pakistan Forest Type Predictor</h1>
+
+  <p>Research lab baseline · Forest-origin categories (JRC 2020)</p>
+
+  @if (staticDemo) {
+    <p class="notice">
+      Static GitHub Pages demonstration only.
+      Live predictions require the Flask API running locally.
+    </p>
+  }
+
+  <form (ngSubmit)="submit()">
+
+    <div class="grid">
+      @for (field of fields; track field.name) {
+        <label>
+          {{ field.label }}
+
+          <input
+            type="number"
+            step="any"
+            [name]="field.name"
+            [min]="field.min ?? null"
+            [max]="field.max ?? null"
+            [(ngModel)]="values[field.name]"
+            required
+          />
+        </label>
+      }
+    </div>
+
+    <button type="submit" [disabled]="loading || staticDemo">
+      {{ loading ? 'Predicting...' : 'Predict forest type' }}
+    </button>
+
+  </form>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (result) {
+    <section class="result">
+
+      <h2>Forest Classification Result</h2>
+
+      <p>Predicted Forest Type:</p>
+
+      <h2>{{ result.label }}</h2>
+
+      <p>{{ getForestDescription(result.label) }}</p>
+
+      <h3>Model Prediction Scores</h3>
+
+      @for (item of result.probabilities | keyvalue; track item.key) {
+
+        <div class="probability-row">
+
+          <p>
+            {{ getForestName(item.key) }}:
+            {{ getPercentage(item.value) }}
+          </p>
+
+          <div class="progress-background">
+            <div
+              class="progress-fill"
+              [style.width.%]="item.value * 100">
+            </div>
+          </div>
+
+        </div>
+      }
+
+      <p class="disclaimer">
+        These scores represent the model's predictions.
+        They do not guarantee that the classification is correct.
+      </p>
+
+    </section>
+  }
+
+</main>
