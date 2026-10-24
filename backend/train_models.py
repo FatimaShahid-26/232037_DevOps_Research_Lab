@@ -1,4 +1,3 @@
-"""STEP 1: Train four forest classifiers and save the best one."""
 from pathlib import Path
 import json
 import joblib
@@ -17,13 +16,12 @@ INPUTS = ["elevation_m", "slope_deg", "aspect_sin", "aspect_cos", "temp_mean_c",
 FORM_INPUTS = ["elevation_m", "slope_deg", "aspect_deg", "temp_mean_c", "precip_total_mm"]
 FOREST_NAMES = {1: "Naturally regenerating forest", 10: "Primary forest", 20: "Planted/plantation forest"}
 
-# Load the two CSV files produced in Phase 4.
+# Load the two CSV files
 train = pd.read_csv(PROJECT / "data/forest_train_spatial.csv")
 test = pd.read_csv(PROJECT / "data/forest_test_spatial.csv")
 assert set(train.tile_id).isdisjoint(set(test.tile_id)), "Train/test tiles overlap!"
 assert train[INPUTS].notna().all().all() and test[INPUTS].notna().all().all()
 
-# Use the original forest IDs for every algorithm, including XGBoost.
 # XGBoost requires 0,1,2, so we convert labels for ALL models.
 encode = {1: 0, 10: 1, 20: 2}
 decode = {0: 1, 1: 10, 2: 20}

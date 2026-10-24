@@ -1,4 +1,3 @@
-"""STEP 3: A small Flask API that uses our saved forest model."""
 from pathlib import Path
 from math import radians, sin, cos, isfinite
 import joblib

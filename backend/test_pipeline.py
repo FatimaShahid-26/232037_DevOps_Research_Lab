@@ -1,4 +1,3 @@
-"""Test that a saved model can predict without starting Flask."""
 import json
 import math
 from pathlib import Path

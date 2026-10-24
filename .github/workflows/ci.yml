@@ -17,7 +17,6 @@ jobs:
           cache-dependency-path: backend/requirements.txt
       - run: python -m pip install -r backend/requirements.txt
       - run: python -m pytest -q backend/tests/test_structure.py
-      # Model-dependent tests intentionally LOCAL unless the trusted model is included.
   frontend:
     runs-on: ubuntu-latest
     defaults:

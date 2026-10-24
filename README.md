@@ -1,35 +1,117 @@
-# Pakistan Forest ML — Easy Lab Starter
+# Pakistan Forest Type Prediction System
 
-A simplified, beginner-friendly version of the original lab starter. It uses the **same real Phase 4 CSVs** and still implements Decision Tree, Random Forest, KNN, XGBoost, Flask, Angular and GitHub CI/CD.
+## About the Project
 
-## Do these commands in order (Windows PowerShell in project root)
+This project is a machine-learning-based web application developed to predict forest-origin categories in Pakistan using geographical and environmental information.
+
+The project combines machine learning with full-stack web development and DevOps practices. Its purpose is to demonstrate how a trained classification model can be integrated into a web application and deployed through an automated CI/CD workflow.
+
+## Project Objectives
+
+The main objectives of this project are:
+
+- Train and compare different machine-learning classification algorithms.
+- Develop a Flask API to serve predictions from a trained model.
+- Build an Angular interface where users can enter environmental information.
+- Connect the frontend and backend to create a working application.
+- Use GitHub Actions to automate testing and deployment.
+
+## Dataset
+
+The dataset was prepared using Google Earth Engine with forest classifications from the JRC Global Forest Types 2020 dataset.
+
+It contains **5,806 observations** collected from different sampled locations across Pakistan.
+
+The three classification categories are:
+
+| Class | Forest Category |
+|---|---|
+| 1 | Naturally Regenerating Forest |
+| 10 | Primary Forest |
+| 20 | Planted/Plantation Forest |
+
+Each observation contains environmental information used to predict the forest category.
+
+## Machine Learning Approach
+
+Four classification algorithms were explored:
+
+1. Decision Tree
+2. Random Forest
+3. K-Nearest Neighbors (KNN)
+4. XGBoost
+
+Random Forest was selected for the application based on development-validation results.
+
+The final model accepts five environmental inputs: elevation, slope, aspect, average annual temperature, and annual precipitation.
+
+## Application Development
+
+**Backend — Flask**
+
+The Flask backend loads the trained machine-learning model and provides an API that accepts environmental measurements and returns a predicted forest category.
+
+**Frontend — Angular**
+
+The Angular interface allows users to enter environmental values and view the predicted forest category, a short description, and the model's prediction scores.
+
+## DevOps and Deployment
+
+Git and GitHub were used for version control and project management.
+
+GitHub Actions was configured to perform automated checks and build the Angular application. The frontend is deployed using GitHub Pages.
+
+The publicly deployed website is a static demonstration. Actual predictions require the Flask backend to run locally.
+
+## Technologies Used
+
+Python, Pandas, Scikit-learn, XGBoost, Flask, Angular, TypeScript, HTML, CSS, Git, GitHub Actions, and GitHub Pages.
+
+## Running the Project Locally
+
+Install the Python requirements:
 
 ```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
 python -m pip install -r backend\requirements.txt
+```
+
+If necessary, train the model and generate the test payload:
+
+```powershell
 python backend\train_models.py
 python backend\make_payload.py
-python backend\test_pipeline.py
-python -m pytest -q backend\tests
+```
+
+Start the backend:
+
+```powershell
 python backend\app.py
 ```
 
-Leave Flask running in Terminal 1. In Terminal 2, create Angular:
-
-```powershell
-npm install -g @angular/cli@22
-ng new frontend --routing --style=css --skip-git --defaults
-```
-
-Copy `frontend_files/app.ts`, `app.html`, `app.css`, `feature-schema.ts`, and `prediction.service.ts` to `frontend/src/app/`. Copy `frontend_files/proxy.conf.json` to `frontend/`. In `frontend/src/app/app.config.ts`, import `provideHttpClient` from `@angular/common/http` and add `provideHttpClient()` to `providers`.
+In a separate terminal, start Angular:
 
 ```powershell
 cd frontend
-npm run build
+npm install
 ng serve --open --proxy-config proxy.conf.json
 ```
 
-Open http://localhost:4200 to test predictions. Read `EASY_EXPLANATION.md` for what each file does and GitHub steps. GitHub Pages hosts **only the static Angular interface**; Flask is local.
+Open `http://localhost:4200` to use the application.
 
-**Research limitation:** the three target classes are JRC forest-origin/management labels, not Pakistan ecological forest formations. Spatial-test accuracy is materially lower than random validation; do not present the prototype as operationally validated.
+## Project Links
+
+**GitHub Repository:**  
+https://github.com/FatimaShahid-26/232037_DevOps_Research_Lab
+
+**Deployed Frontend:**  
+https://fatimashahid-26.github.io/232037_DevOps_Research_Lab/
+
+## Limitations and Future Improvements
+
+The current dataset uses forest-origin categories derived from an existing geographical classification map. The model has not been independently validated for operational forest management.
+
+Future improvements could include additional environmental features, independently validated Pakistani ecological forest-type labels, improved geographical evaluation, and deployment of the Flask backend to support live predictions online.
+
+---
+
+*This application was developed as an academic project to gain practical experience with machine learning, full-stack application development, and CI/CD workflows.*
